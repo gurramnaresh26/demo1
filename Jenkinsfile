@@ -3,9 +3,6 @@ pipeline{
     		{
     		 label "slave"
 		}
-    tools{
-    	 	maven "m1"
-    	}
     stages {
         
         stage('clone') {
