@@ -1,14 +1,24 @@
-pipeline{
-     	  agent
-    		{
-    		 label "slave"
-		}
-    stages {
-        
-        stage('clone') {
-            steps{
-            git 'https://github.com/Apuroopa4/demo1.git'
-        }
-        }
+pipeline {
+	agent any
+	tools {
+        maven 'm1' 
     }
+	stages {
+		stage('Build') {
+			steps {
+				sh 'mvn -B -DskipTests clean install'
+			}
+		}
+		stage('Testing') {
+			steps {
+				sh 'mvn test'
+			}
+			post {
+				always {
+					junit 'target/surefire-reports/*.xml'
+				}
+			}
+		}
+		
+	}
 }
